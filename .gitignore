@@ -1,0 +1,9 @@
+third_party/
+build/
+.cache/
+wads/*
+!wads/.gitkeep
+default.cfg
+doomgeneric.cfg
+.savegame/
+*.lmp
