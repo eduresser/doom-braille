@@ -36,8 +36,10 @@ int braille_luma(int r, int g, int b) {
     return (19595 * r + 38470 * g + 7471 * b + 32768) >> 16;
 }
 
-int braille_density(int luminance) {
-    double target = (double)luminance * 256.0 / 255.0;
+BrailleCurve braille_curve = BRAILLE_CURVE_SYMMETRIC;
+
+/* 0, 1, 2, 4, ..., 128, 256 for a target of 0..256 dots. */
+static int pow2_ladder(double target) {
     if (target < 0.70710678118654752440 /* 2^-0.5 */) {
         return 0;
     }
@@ -45,6 +47,15 @@ int braille_density(int luminance) {
     if (level < 0) level = 0;
     if (level > 8) level = 8;
     return 1 << level;
+}
+
+int braille_density(int luminance) {
+    double target = (double)luminance * 256.0 / 255.0;
+    if (braille_curve == BRAILLE_CURVE_POW2 || target <= 128.0) {
+        return pow2_ladder(target);
+    }
+    /* Bright half mirrors the dark one: count unlit dots on the same ladder. */
+    return 256 - pow2_ladder(256.0 - target);
 }
 
 static size_t utf8_encode(unsigned int codepoint, char *out) {

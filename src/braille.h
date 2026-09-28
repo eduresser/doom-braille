@@ -14,7 +14,18 @@ extern const uint8_t BRAILLE_BAYER16[16][16];
 /* ITU-R 601 luma, 16.16 fixed point. */
 int braille_luma(int r, int g, int b);
 
-/* Logarithmic dot-density ladder: 0, 1, 2, 4, ..., 128, 256 lit dots out of 256. */
+typedef enum {
+    /* 0, 1, 2, 4, ..., 128, 192, 224, ..., 254, 255, 256: the bright half
+     * mirrors the dark one (1 unlit dot, then 2, 4, ...). */
+    BRAILLE_CURVE_SYMMETRIC,
+    /* 0, 1, 2, 4, ..., 128, 256: the original, dark-side-only ladder. */
+    BRAILLE_CURVE_POW2,
+} BrailleCurve;
+
+/* Which ladder braille_density() uses. Defaults to BRAILLE_CURVE_SYMMETRIC. */
+extern BrailleCurve braille_curve;
+
+/* Logarithmic dot-density ladder (see BrailleCurve): lit dots out of 256. */
 int braille_density(int luminance);
 
 /*
