@@ -80,9 +80,7 @@ and as released once none arrive for `KEY_RELEASE_MS` milliseconds (default
 
 - `make build` — compile the game without starting it.
 - `make cli` — build `build/braille-cli`, a standalone tool that converts
-  a single image to braille (used by the test suite).
-- `make test-deps` — fetch and build everything the tests need.
-- `make test` — run the test suite (`node --test tests/`).
+  a single image to braille.
 - `make clean` — remove build output.
 
 ## Project layout
@@ -92,6 +90,3 @@ and as released once none arrive for `KEY_RELEASE_MS` milliseconds (default
 - `third_party/doomgeneric/` — fetched by `make`, git-ignored, pinned to
   the commit in `Makefile`.
 - `wads/` — put your WAD file(s) here (git-ignored, except this note).
-- `.cache/` — downloaded test fixtures (git-ignored).
-- `tests/` — the test suite; every acceptance criterion in the spec maps
-  to a test tagged `@spec:AC-xxx`.
