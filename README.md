@@ -65,8 +65,7 @@ With color off, every glyph is drawn in a fixed light gray (`#D0D0D0`), so
 the picture looks the same before and after an `Alt+C` round trip. Pick a
 different one with `MONO_COLOR`, for example `MONO_COLOR=33FF66 make run`.
 Shading uses a symmetric dot ladder: dark tones light 1, 2, 4, ... of every
-256 dots, and bright tones leave 1, 2, 4, ... unlit. `CURVE=pow2 make run`
-brings back the original ladder (dark side only) for comparison.
+256 dots, and bright tones leave 1, 2, 4, ... unlit.
 The engine's startup log is kept off the game screen and printed to the
 terminal after you quit.
 

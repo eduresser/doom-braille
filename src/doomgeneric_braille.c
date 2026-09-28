@@ -252,8 +252,6 @@ void DG_Init(void) {
     g_color = env_bool("COLOR", 0);
     g_invert = env_bool("INVERT", 1);
     parse_mono_color();
-    const char *curve = getenv("CURVE");
-    if (curve && strcmp(curve, "pow2") == 0) braille_curve = BRAILLE_CURVE_POW2;
 
     if (term_enter(g_tty_fd) != 0) {
         fprintf(stderr, "braille-game: failed to enter raw mode: %s\n", strerror(errno));
