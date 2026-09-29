@@ -19,13 +19,12 @@ typedef enum {
     INPUT_KEY_DOWN,
     INPUT_KEY_UP,
     INPUT_TOGGLE_COLOR,
-    INPUT_TOGGLE_INVERT,
     INPUT_QUIT,
 } InputEventKind;
 
 typedef struct {
     InputEventKind kind;
-    int code; /* engine key code; unused for TOGGLE_COLOR/TOGGLE_INVERT/QUIT */
+    int code; /* engine key code; unused for TOGGLE_COLOR/QUIT */
 } InputEvent;
 
 /*

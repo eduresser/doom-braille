@@ -45,7 +45,6 @@ static void kitty_key_event(InputDecoder *d, int code, int is_down) {
 static void legacy_handle_alt(InputDecoder *d, uint8_t b, long now_ms) {
     (void)now_ms;
     if (b == 'c' || b == 'C') push_event(d, INPUT_TOGGLE_COLOR, 0);
-    else if (b == 'i' || b == 'I') push_event(d, INPUT_TOGGLE_INVERT, 0);
     /* Any other Alt+letter combination is outside the controls table. */
 }
 
@@ -102,7 +101,7 @@ static int fkey_from_number(int num) {
 /* CSI ... u: general codepoint report (kitty's "report all keys as escape
  * codes"). mods follows the kitty encoding (raw value - 1 = bitmask, bit0
  * shift, bit1 alt, bit2 ctrl); event 1/2/3 = press/repeat/release, default
- * press when absent. Alt+C/Alt+I/Ctrl+C are one-shot actions, not held
+ * press when absent. Alt+C/Ctrl+C are one-shot actions, not held
  * keys, so they are pushed directly here instead of returning a code. */
 static int codepoint_to_code(InputDecoder *d, int cp, int mods, int event) {
     int ev = (event < 0) ? 1 : event;
@@ -112,7 +111,6 @@ static int codepoint_to_code(InputDecoder *d, int cp, int mods, int event) {
 
     if (ev == 1) {
         if (alt && (cp == 'c' || cp == 'C')) { push_event(d, INPUT_TOGGLE_COLOR, 0); return INPUT_CODE_HANDLED; }
-        if (alt && (cp == 'i' || cp == 'I')) { push_event(d, INPUT_TOGGLE_INVERT, 0); return INPUT_CODE_HANDLED; }
         if (ctrl && (cp == 'c' || cp == 'C')) { push_event(d, INPUT_QUIT, 0); return INPUT_CODE_HANDLED; }
     }
 

@@ -132,7 +132,6 @@ static void print_input_event(long ms, const InputEvent *ev) {
         case INPUT_KEY_DOWN: printf("%ld down %d\n", ms, ev->code); break;
         case INPUT_KEY_UP: printf("%ld up %d\n", ms, ev->code); break;
         case INPUT_TOGGLE_COLOR: printf("%ld toggle-color\n", ms); break;
-        case INPUT_TOGGLE_INVERT: printf("%ld toggle-invert\n", ms); break;
         case INPUT_QUIT: printf("%ld quit\n", ms); break;
     }
 }

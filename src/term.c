@@ -22,9 +22,13 @@ static const int TERM_BIT_FOR_POS[4][2] = {
     {6, 7},
 };
 
-#define ENTER_SEQ "\x1b[?1049h\x1b[2J\x1b[H\x1b[?25l"
-#define LEAVE_SEQ "\x1b[?25h\x1b[?1049l"
-#define CLEAR_SEQ "\x1b[2J\x1b[H"
+/* The game always runs on a black background, whatever the terminal theme:
+ * the background is set to true black before every erase (erase fills with
+ * the current background) and nothing but LEAVE_SEQ resets it. */
+#define BG_BLACK "\x1b[48;2;0;0;0m"
+#define ENTER_SEQ "\x1b[?1049h" BG_BLACK "\x1b[2J\x1b[H\x1b[?25l"
+#define LEAVE_SEQ "\x1b[0m\x1b[?25h\x1b[?1049l"
+#define CLEAR_SEQ BG_BLACK "\x1b[2J\x1b[H"
 
 #define KITTY_QUERY_SEQ "\x1b[?u\x1b[c"
 #define KITTY_PUSH_SEQ "\x1b[>11u"

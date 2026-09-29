@@ -51,7 +51,6 @@ static TermScreen g_screen;
 static int g_term_cols = 80;
 static int g_term_rows = 24;
 static int g_color;
-static int g_invert;
 
 /* The real terminal. main() moves it off fd 1/2 before the engine starts,
  * because the engine printf()s its startup log (and I_Error messages) to
@@ -181,16 +180,13 @@ static void shutdown_hook(void) {
     exit(0);
 }
 
-/* Handles one decoded key/toggle/quit event: Alt+C/Alt+I/Ctrl+C locally,
+/* Handles one decoded key/toggle/quit event: Alt+C/Ctrl+C locally,
  * everything else queued for DG_GetKey. See spec.md's "How the bindings
  * reach the engine". */
 static void handle_input_event(const InputEvent *ev) {
     switch (ev->kind) {
         case INPUT_TOGGLE_COLOR:
             g_color = !g_color;
-            return;
-        case INPUT_TOGGLE_INVERT:
-            g_invert = !g_invert;
             return;
         case INPUT_QUIT:
             exit(0);
@@ -250,7 +246,6 @@ static void poll_input(void) {
 
 void DG_Init(void) {
     g_color = env_bool("COLOR", 0);
-    g_invert = env_bool("INVERT", 1);
     parse_mono_color();
 
     if (term_enter(g_tty_fd) != 0) {
@@ -297,7 +292,7 @@ void DG_DrawFrame(void) {
     BrailleLayout layout = braille_layout(g_term_cols, g_term_rows, GAME_RESX, GAME_DISPLAY_H);
 
     BrailleRGB *resampled = braille_resample(src, GAME_RESX, GAME_RESY, layout.px_w, layout.px_h);
-    TermCell *cells = term_cells_from_pixels(resampled, layout.px_w, layout.px_h, g_invert, g_color);
+    TermCell *cells = term_cells_from_pixels(resampled, layout.px_w, layout.px_h, 1, g_color);
     free(resampled);
     if (!g_color) {
         for (int i = 0; i < layout.cols * layout.rows; i++) {

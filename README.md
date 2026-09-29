@@ -58,9 +58,10 @@ error explaining where to put one.
 | `Esc`, `Enter`, `Tab`, `Backspace`, `F1`–`F12`, `-`, `=` | the engine's own menu/automap/confirm keys                              |
 | any other letter or digit                                                 | passed straight to the engine (cheats, save names,`y`/`n` prompts)  |
 | `Alt+C`                                                                 | toggle color                                                            |
-| `Alt+I`                                                                 | toggle invert                                                           |
 | `Ctrl+C`                                                                | quit at once, terminal restored                                         |
 
+The game always draws on a black background, whatever your terminal
+theme, and restores the terminal's own colors when you quit.
 With color off, every glyph is drawn in a fixed light gray (`#D0D0D0`), so
 the picture looks the same before and after an `Alt+C` round trip. Pick a
 different one with `MONO_COLOR`, for example `MONO_COLOR=33FF66 make run`.
